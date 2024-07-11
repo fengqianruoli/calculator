@@ -1,20 +1,35 @@
-let result = "";
+let display = document.getElementById('display');
+let currentInput = '';
+let operator = null;
+let firstOperand = null;
 
-function appendToResult(value) {
-    result += value;
-    document.getElementById("result").value = result;
+function input(value) {
+    if (display.innerText === '0' && value !== '.') {
+        display.innerText = value;
+    } else {
+        display.innerText += value;
+    }
+    currentInput += value;
 }
 
-function clearResult() {
-    result = "";
-    document.getElementById("result").value = "";
+function clearDisplay() {
+    display.innerText = '0';
+    currentInput = '';
+    operator = null;
+    firstOperand = null;
+}
+
+function deleteLast() {
+    display.innerText = display.innerText.slice(0, -1) || '0';
+    currentInput = currentInput.slice(0, -1);
 }
 
 function calculate() {
     try {
-        result = eval(result);
-        document.getElementById("result").value = result;
-    } catch (error) {
-        document.getElementById("result").value = "Error";
+        display.innerText = eval(currentInput.replace('÷', '/').replace('×', '*'));
+        currentInput = display.innerText;
+    } catch {
+        display.innerText = 'Error';
+        currentInput = '';
     }
 }
